@@ -5,7 +5,7 @@
 
 Name:           skype
 Version:        4.3.0.37
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Skype Messaging and Telephony Client
 
 License:        Skype End User License Agreement
@@ -14,7 +14,10 @@ URL:            http://www.skype.com/products/skype/linux/
 # http://www.skype.com/go/getskype-linux-beta-dynamic
 Source0:        http://download.skype.com/linux/%{name}-%{version}.tar.bz2
 
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} ==7
 BuildRequires:  desktop-file-utils
+%endif
+
 Requires:       hicolor-icon-theme
 Requires:       %{name}-data = %{version}-%{release}
 # Needed for the welcome screen, not pulled in by dependencies
@@ -67,14 +70,18 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{name}.desktop
 
 %post data
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} ==7
 %{_bindir}/update-desktop-database &> /dev/null || :
+%endif
 
 %postun data
 if [ $1 -eq 0 ] ; then
     touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} ==7
 %{_bindir}/update-desktop-database &> /dev/null || :
+%endif
 
 %posttrans data
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
@@ -93,6 +100,9 @@ gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/%{name}
 
 %changelog
+* Fri Nov 04 2016 Simone Caronni <negativo17@gmail.com> - 4.3.0.37-4
+- Do not run update-desktop-database on Fedora 25 as per packaging guidelines.
+
 * Wed Jan 07 2015 Simone Caronni <negativo17@gmail.com> - 4.3.0.37-3
 - Add pulseaudio libraries as requirement. Not linked from main executable but
   loaded at runtime.
