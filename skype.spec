@@ -14,7 +14,7 @@ URL:            http://www.skype.com/products/skype/linux/
 # http://www.skype.com/go/getskype-linux-beta-dynamic
 Source0:        http://download.skype.com/linux/%{name}-%{version}.tar.bz2
 
-%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} ==7
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel}
 BuildRequires:  desktop-file-utils
 %endif
 
@@ -70,7 +70,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{name}.desktop
 
 %post data
 touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} ==7
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel}
 %{_bindir}/update-desktop-database &> /dev/null || :
 %endif
 
@@ -79,7 +79,7 @@ if [ $1 -eq 0 ] ; then
     touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
-%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} ==7
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel}
 %{_bindir}/update-desktop-database &> /dev/null || :
 %endif
 
