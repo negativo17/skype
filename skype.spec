@@ -14,9 +14,7 @@ URL:            http://www.skype.com/products/skype/linux/
 # http://www.skype.com/go/getskype-linux-beta-dynamic
 Source0:        http://download.skype.com/linux/%{name}-%{version}.tar.bz2
 
-%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel}
 BuildRequires:  desktop-file-utils
-%endif
 
 Requires:       hicolor-icon-theme
 Requires:       %{name}-data = %{version}-%{release}
